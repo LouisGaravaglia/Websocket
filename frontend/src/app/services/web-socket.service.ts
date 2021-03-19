@@ -20,11 +20,12 @@ export class WebSocketService {
 
     this.webSocket.onmessage = (event) => {
       console.log("message from server: ", event.data);
-      
-      console.log("On Message - Frontend");
-      
       const chatMessageDto = JSON.parse(event.data);
       this.chatMessages.push(chatMessageDto);
+      console.log("this is chatMessages array: ");
+      console.log(this.chatMessages);
+      
+      
     };
 
     this.webSocket.onclose = (event) => {
@@ -34,6 +35,7 @@ export class WebSocketService {
 
   public sendMessage(chatMessageDto: ChatMessageDto) {
     this.webSocket.send(JSON.stringify(chatMessageDto));
+    this.chatMessages.push(chatMessageDto);
   }
 
   public closeWebsocket() {

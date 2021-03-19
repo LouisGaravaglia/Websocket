@@ -27,6 +27,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     const chatMessageDto = new ChatMessageDto(sendForm.value.user, sendForm.value.message)
     // console.log(sendForm.value);
     this.webSocketService.sendMessage(chatMessageDto);
+    // this.webSocketService.sendMessage({user: "FAKE", message: "FAKEmessage"});
     //clear form by doing the following
     sendForm.controls.message.reset();
   }
