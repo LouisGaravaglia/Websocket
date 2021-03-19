@@ -15,27 +15,24 @@ export class WebSocketService {
     this.webSocket = new WebSocket('ws://localhost:3000/chat');
 
     this.webSocket.onopen = (event) => {
-      console.log('Open: ', event);
+      console.log('Websocket Open: ', event);
     };
 
     this.webSocket.onmessage = (event) => {
-      console.log("message from server: ", event.data);
       const chatMessageDto = JSON.parse(event.data);
+      //ADD MESSAGE TO CHATMESSAGES STATE TO APPEND TO DOM
       this.chatMessages.push(chatMessageDto);
-      console.log("this is chatMessages array: ");
-      console.log(this.chatMessages);
-      
-      
     };
 
     this.webSocket.onclose = (event) => {
-      console.log('Closed: ', event);
+      console.log('Websocket Closed: ', event);
     };
   }
 
   public sendMessage(chatMessageDto: ChatMessageDto) {
     this.webSocket.send(JSON.stringify(chatMessageDto));
-    // this.chatMessages.push(chatMessageDto);
+    //I DON'T NEED TO ADD MESSAGE I'M SENDING TO MY CHATMESSAGES STATE SINCE
+    //THE BACKEND WILL BE SENDING IT BACK TO ME SINCE IT SENDS TO EVERY CLIENT ON THE CHAT ROUTE
   }
 
   public closeWebsocket() {

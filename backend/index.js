@@ -6,11 +6,10 @@ app.use(express.static(__dirname + '/public'));
 app.get('/', (req, res) => res.send('Hello World from LG comp'))
 
 app.ws('/chat', (ws, req) => {
-
-    ws.send(JSON.stringify({"user":"ServerUser","message":"ServerMessage"}));
+    //SENDING WELCOME MESSAGE WHEN USER FIRST VISITS /CHAT ROUTE
+    ws.send(JSON.stringify({"user":"Admin","message":"Welcome to the chat!"}));
     ws.on('message', function(data) {
-        console.log("MSG received on server");
-        console.log("data", data);
+        //RELAYS THE MESSAGE THAT ANY USER SENDS TO EACH CLIENT BROWSER SO THAT IT CAN BE APPENDED TO THE DOM
         expressWs.getWss().clients.forEach(client => {
             if (client.readyState === 1) {
                 client.send(data);
