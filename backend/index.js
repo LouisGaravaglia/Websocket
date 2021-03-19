@@ -11,6 +11,11 @@ app.ws('/chat', (ws, req) => {
     ws.on('message', function(data) {
         console.log("MSG received on server");
         console.log("data", data);
+        expressWs.getWss().clients.forEach(client => {
+            if (client.readyState === 1) {
+                client.send(data);
+            }
+        })
     })
 })
 
