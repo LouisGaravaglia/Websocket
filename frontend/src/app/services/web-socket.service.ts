@@ -12,13 +12,17 @@ export class WebSocketService {
   constructor() { }
 
   public openWebsocket() {
-    this.webSocket = new WebSocket('ws://localhost:3000');
+    this.webSocket = new WebSocket('ws://localhost:3000/chat');
 
     this.webSocket.onopen = (event) => {
       console.log('Open: ', event);
     };
 
     this.webSocket.onmessage = (event) => {
+      console.log("message from server: ", event.data);
+      
+      console.log("On Message - Frontend");
+      
       const chatMessageDto = JSON.parse(event.data);
       this.chatMessages.push(chatMessageDto);
     };
