@@ -3,7 +3,7 @@ const app = express();
 const expressWs = require('express-ws')(app);
 app.use(express.static(__dirname + '/public'));
 
-app.get('/', (req, res) => res.send('Hello World from LG comp'))
+app.get('/', (req, res) => res.send('Hello World From Express Server'))
 
 app.ws('/chat', (ws, req) => {
     //SENDING WELCOME MESSAGE WHEN USER FIRST VISITS /CHAT ROUTE

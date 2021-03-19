@@ -13,22 +13,21 @@ export class ChatComponent implements OnInit, OnDestroy {
   //INJECTING THIS CHATCOMPONENT WITH THE WEBSOCKET SERVICE
   constructor(public webSocketService: WebSocketService) { }
 
-  //ON INIT LIFECYCLE HOOK
+  //OPEN WEBSOCKET ON INIT LIFECYCLE HOOK
   ngOnInit(): void {
     this.webSocketService.openWebsocket()
   }
 
+  //CLOSE WEBSOCKET ON DESTROY LIFECYCLE HOK
   ngOnDestroy(): void {
     this.webSocketService.closeWebsocket()
   }
 
-
+  //SENDING A MESSAGE METHOD
   sendMessage(sendForm: NgForm) {
     const chatMessageDto = new ChatMessageDto(sendForm.value.user, sendForm.value.message)
-    // console.log(sendForm.value);
     this.webSocketService.sendMessage(chatMessageDto);
-    // this.webSocketService.sendMessage({user: "FAKE", message: "FAKEmessage"});
-    //clear form by doing the following
+    //CLEAR THE MESSAGE INPUT AFTER SENDING A MESSAGE, BUT NOT THE USER'S NAME
     sendForm.controls.message.reset();
   }
 }

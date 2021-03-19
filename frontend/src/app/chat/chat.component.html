@@ -3,20 +3,22 @@
         <div class="chat-content">
             <div class="card">
                 <ul class="list-group list-group-flush">
-
+                    <!-- LOOPING OVER MESSAGES -->
                     <li class="list-group-item" *ngFor="let chatMessage of webSocketService.chatMessages">
                         <strong>{{chatMessage.user}}: </strong>
                         <span>{{chatMessage.message}}</span>
                     </li>
-
                 </ul>
             </div>
         </div>
+        <!-- FORM BELOW DISPLAYING THE MESSAGES WHERE THE USER CAN CHOOSE THEIR NAME AND TYPE THEIR MESSAGE -->
         <form (ngSubmit)="sendMessage(sendForm)" #sendForm="ngForm" action="">
             <div class="chat-send row">
+                <h6>User Name:</h6>
                 <div class="col-2">
                     <input type="text" class="form-control" name="user" id="input-user" ngModel>
                 </div>
+                <h6>Message:</h6>
                 <div class="col-8">
                     <input type="text" class="form-control" name="message" id="input-message" ngModel>
                 </div>
