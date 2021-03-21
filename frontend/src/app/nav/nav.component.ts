@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+
+interface navLinksObject {
+  [key: string]: string
+}
 
 @Component({
   selector: 'app-nav',
@@ -6,12 +10,27 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent {
-
-
-  constructor() { }
-
-
-
+  navLinks: navLinksObject = {"homeIsActive": "", "discoverIsActive": ""}
+  
+  constructor() {
+    if (window.location.href === "http://localhost:4200/chat") {
+      this.navLinks["homeIsActive"] = "";
+      this.navLinks["discoverIsActive"] = "active";
+    } else {
+      this.navLinks["homeIsActive"] = "active";
+      this.navLinks["discoverIsActive"] = "";
+    }
+   }
+  
+  handleClick(linkName: string) {
+    Object.keys(this.navLinks).map((key: string) => {
+      if (key === linkName) {
+        this.navLinks[key] = "active";
+      } else {
+        this.navLinks[key] = "";
+      }
+    })
+  }
 
 
 }

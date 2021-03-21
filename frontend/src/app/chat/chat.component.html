@@ -1,4 +1,23 @@
 <main class="chat">
+    <!-- DROPDOWN BUTTON -->
+    <div class="d-flex p-3 mx-auto flex-column text-center">
+        <main class="px-3 w-50 mx-auto my-auto">
+        <h1>Pick a Song!</h1>
+        <p class="lead">Choose a song that you want to listen to. Once you select your song you'll automatically be sent to that song's live chat room. Anyone in this chat room is also listening to this song!</p>
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                Songs
+            </button>
+            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
+                <li><a class="dropdown-item {{songLinks.MusicianByPorterRobinson}}" (click)="handleClick('MusicianByPorterRobinson')">"Musician" by Porter Robinson</a></li>
+                <li><a class="dropdown-item {{songLinks.NotDeadYetByLordHuron}}" (click)="handleClick('NotDeadYetByLordHuron')">"Not Dead Yet" by Lord Huron</a></li>
+                <li><a class="dropdown-item {{songLinks.PeachesByJustinBieber}}" (click)="handleClick('PeachesByJustinBieber')">"Peaches" by Justin Bieber</a></li>
+                <li><a class="dropdown-item {{songLinks.SoundAndVisionByHeladoNegro}}" (click)="handleClick('SoundAndVisionByHeladoNegro')">"Sound and Vision" by Helado Negro</a></li>
+            </ul>
+        </div>
+        </main>
+    </div>
+    <!-- CHAT CONTAINER -->
     <div class="container">
         <div class="chat-content">
             <div class="card">
