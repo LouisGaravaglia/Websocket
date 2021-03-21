@@ -23,15 +23,10 @@ export class NavComponent {
    }
   
   handleClick(linkName: string) {
-    console.log("in handle click");
     Object.keys(this.navLinks).map((key: string) => {
       if (key === linkName) {
-        console.log("turning to active: ", key);
-        console.log("turning value: ", this.navLinks[key]);
         this.navLinks[key] = "active";
       } else {
-        console.log("deactivating: ", key);
-        console.log("deactivating: ", this.navLinks[key]);
         this.navLinks[key] = "";
       }
     })
