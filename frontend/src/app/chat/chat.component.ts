@@ -13,6 +13,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   //INJECTING THIS CHATCOMPONENT WITH THE WEBSOCKET SERVICE
   constructor(public webSocketService: WebSocketService) { }
 
+
   //OPEN WEBSOCKET ON INIT LIFECYCLE HOOK
   ngOnInit(): void {
     this.webSocketService.openWebsocket()
