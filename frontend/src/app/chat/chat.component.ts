@@ -2,6 +2,7 @@ import { ChatMessageDto } from './../models/chatMessageDto';
 import { WebSocketService } from './../services/web-socket.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
 interface songLinksObject {
   [key: string]: string
@@ -18,10 +19,13 @@ export class ChatComponent implements OnInit, OnDestroy {
     "NotDeadYetByLordHuron": "",
     "PeachesByJustinBieber": "",
     "SoundAndVisionByHeladoNegro": ""
-  }
+  };
+  chatRoomName: string = "";
 
   //INJECTING THIS CHATCOMPONENT WITH THE WEBSOCKET SERVICE
-  constructor(public webSocketService: WebSocketService) { }
+  constructor(public webSocketService: WebSocketService, public route: ActivatedRoute) { 
+    this.route.params.subscribe(params => this.chatRoomName = params.chatRoomName);
+  }
 
 
   //OPEN WEBSOCKET ON INIT LIFECYCLE HOOK
@@ -37,7 +41,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   //SENDING A MESSAGE METHOD
   sendMessage(sendForm: NgForm) {
     const chatMessageDto = new ChatMessageDto(sendForm.value.user, sendForm.value.message)
-    this.webSocketService.sendMessage(chatMessageDto);
+    this.webSocketService.sendMessage(chatMessageDto, this.chatRoomName);
     //CLEAR THE MESSAGE INPUT AFTER SENDING A MESSAGE, BUT NOT THE USER'S NAME
     sendForm.controls.message.reset();
   }
@@ -50,5 +54,6 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.songLinks[key] = "";
       }
     })
+    this.chatRoomName = songName;
   }
 }
