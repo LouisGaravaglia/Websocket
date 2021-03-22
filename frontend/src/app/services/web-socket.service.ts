@@ -17,9 +17,11 @@ export class WebSocketService {
     
   //  }
 
-  public openWebsocket() {
+  public openWebsocket(chatRoomName: string) {
+    this.chatRoomName = chatRoomName;
+    this.webSocket = new WebSocket('ws://localhost:3000/chat/' + this.chatRoomName);
+    console.log("websocket URL: ", 'ws://localhost:3000/chat/' + this.chatRoomName);
     
-    this.webSocket = new WebSocket('ws://localhost:3000/chat/hii' + this.chatRoomName);
     // this.webSocket = new WebSocket('ws://localhost:3000/chat/');
 
     this.webSocket.onopen = (event) => {
@@ -28,6 +30,8 @@ export class WebSocketService {
 
     this.webSocket.onmessage = (event) => {
       const chatMessageDto = JSON.parse(event.data);
+      console.log("chatMessageDto: ", chatMessageDto);
+      
       //ADD MESSAGE TO CHATMESSAGES STATE TO APPEND TO DOM
       this.chatMessages.push(chatMessageDto);
     };
@@ -37,9 +41,9 @@ export class WebSocketService {
     };
   }
 
-  public sendMessage(chatMessageDto: ChatMessageDto, chatRoomName: string) {
-    this.chatRoomName = chatRoomName;
-    console.log("websocket url: ", 'ws://localhost:3000/chat/' + this.chatRoomName);
+  public sendMessage(chatMessageDto: ChatMessageDto) {
+    console.log("Sending message");
+    
     
     this.webSocket.send(JSON.stringify(chatMessageDto));
     //I DON'T NEED TO ADD MESSAGE I'M SENDING TO MY CHATMESSAGES STATE SINCE
