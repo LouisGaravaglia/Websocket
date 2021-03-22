@@ -1,6 +1,6 @@
 import { ChatMessageDto } from './../models/chatMessageDto';
 import { WebSocketService } from './../services/web-socket.service';
-import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
@@ -13,34 +13,26 @@ interface songLinksObject {
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css']
 })
-export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
+export class ChatComponent implements OnInit, OnDestroy {
+  chatRoomName: string = "";
+  userName: string | null = "";
+  userNameDisplay: string = "";
+  messageDisplay: string = "d-none";
   songLinks: songLinksObject = {
     "MusicianByPorterRobinson": "",
     "NotDeadYetByLordHuron": "",
     "PeachesByJustinBieber": "",
     "SoundAndVisionByHeladoNegro": ""
   };
-  chatRoomName: string = "";
-  userName: string | null = "";
-  userNameDisplay: string = "";
-  messageDisplay: string = "d-none";
 
   //INJECTING THIS CHATCOMPONENT WITH THE WEBSOCKET SERVICE
   constructor(public webSocketService: WebSocketService, public route: ActivatedRoute) { 
     this.route.params.subscribe(params => this.chatRoomName = params.chatRoomName);
-
   }
-
 
   //OPEN WEBSOCKET ON INIT LIFECYCLE HOOK
   ngOnInit(): void {
-
     this.webSocketService.openWebsocket(this.chatRoomName)
-
-  }
-
-  ngAfterViewInit(): void {
-
   }
 
   //CLOSE WEBSOCKET ON DESTROY LIFECYCLE HOK
@@ -67,19 +59,8 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
     const chatMessageDto = new ChatMessageDto(this.userName === null ? "" : this.userName, "joined chat", "join")
     this.webSocketService.sendMessage(chatMessageDto);
 
-    //CLEAR THE MESSAGE INPUT AFTER SENDING A MESSAGE, BUT NOT THE USER'S NAME
-    this.messageDisplay = "";
+    //REMOVE THE USERNAME PROMPT ONCE ANSWERED AND DISPLAY THE MESSAGE FIELD
     this.userNameDisplay = "d-none";
-  }
-
-  handleClick(songName: string) {
-    Object.keys(this.songLinks).map((key: string) => {
-      if (key === songName) {
-        this.songLinks[key] = "active";
-      } else {
-        this.songLinks[key] = "";
-      }
-    })
-    this.chatRoomName = songName;
+    this.messageDisplay = "";
   }
 }

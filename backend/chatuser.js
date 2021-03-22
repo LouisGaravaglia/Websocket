@@ -34,7 +34,7 @@ class ChatUser {
     this.room.join(this);
     this.room.broadcast({
       user: 'Admin',
-      message: `${this.name} joined "${this.room.name}".`
+      message: `${this.name} joined the "${this.room.name}" room.`
     });
   }
 
@@ -56,7 +56,7 @@ class ChatUser {
   handleMessage(jsonData) {
     let msg = JSON.parse(jsonData);
     console.log("this is msg: ", msg);
-    console.log("username: ", this.user);
+ 
 
     if (msg.type === 'join') this.handleJoin(msg.user);
     else if (msg.type === 'chat') this.handleChat(msg.message);
@@ -68,8 +68,8 @@ class ChatUser {
   handleClose() {
     this.room.leave(this);
     this.room.broadcast({
-      type: 'note',
-      text: `${this.name} left ${this.room.name}.`
+      user: 'Admin',
+      message: `${this.name} left the "${this.room.name}" room.`
     });
   }
 }
