@@ -22,6 +22,8 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
   };
   chatRoomName: string = "";
   userName: string | null = "";
+  userNameDisplay: string = "";
+  messageDisplay: string = "d-none";
 
   //INJECTING THIS CHATCOMPONENT WITH THE WEBSOCKET SERVICE
   constructor(public webSocketService: WebSocketService, public route: ActivatedRoute) { 
@@ -66,7 +68,8 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
     this.webSocketService.sendMessage(chatMessageDto);
 
     //CLEAR THE MESSAGE INPUT AFTER SENDING A MESSAGE, BUT NOT THE USER'S NAME
-    sendForm.controls.userName.reset();
+    this.messageDisplay = "";
+    this.userNameDisplay = "d-none";
   }
 
   handleClick(songName: string) {
