@@ -47,11 +47,7 @@ class ChatUser {
     });
   }
 
-  /** Handle messages from client:
-   *
-   * - {type: "join", name: username} : join
-   * - {type: "chat", text: msg }     : chat
-   */
+  /** Handle messages from client:*/
 
   handleMessage(jsonData) {
     let msg = JSON.parse(jsonData);

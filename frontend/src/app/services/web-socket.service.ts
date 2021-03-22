@@ -12,7 +12,7 @@ export class WebSocketService {
 
   public openWebsocket(chatRoomName: string) {
     this.chatRoomName = chatRoomName;
-    this.webSocket = new WebSocket('ws://localhost:3000/chat/' + this.chatRoomName);
+    this.webSocket = new WebSocket('ws://localhost:9000/.netlify/functions/api/chat/' + this.chatRoomName);
 
     this.webSocket.onopen = (event) => {
       console.log('Websocket Open: ', event);
