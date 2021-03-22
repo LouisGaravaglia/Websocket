@@ -8,11 +8,11 @@ export class WebSocketService {
 
   webSocket!: WebSocket;
   chatMessages: ChatMessageDto[] = [];
+  chatRoomName: string = '';
 
-  constructor() { }
-
-  public openWebsocket() {
-    this.webSocket = new WebSocket('ws://localhost:3000/chat');
+  public openWebsocket(chatRoomName: string) {
+    this.chatRoomName = chatRoomName;
+    this.webSocket = new WebSocket('ws://localhost:3000/chat/' + this.chatRoomName);
 
     this.webSocket.onopen = (event) => {
       console.log('Websocket Open: ', event);

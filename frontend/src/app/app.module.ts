@@ -1,22 +1,20 @@
-// import { WebSocketService } from './services/web-socket.service';
-// import { ChatService } from './chat.service';
-// import { WebsocketService } from './websocket.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms'
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
 import { ChatComponent } from './chat/chat.component';
 import { HomeComponent } from './home/home.component';
+import { DiscoverComponent } from './discover/discover.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavComponent,
     ChatComponent,
-    HomeComponent
+    HomeComponent,
+    DiscoverComponent
   ],
   imports: [
     BrowserModule,

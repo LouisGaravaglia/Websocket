@@ -2,6 +2,7 @@ import { ChatMessageDto } from './../models/chatMessageDto';
 import { WebSocketService } from './../services/web-socket.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
 interface songLinksObject {
   [key: string]: string
@@ -13,42 +14,49 @@ interface songLinksObject {
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit, OnDestroy {
+  chatRoomName: string = "";
+  userName: string | null = "";
+  userNameDisplay: string = "";
+  messageDisplay: string = "d-none";
   songLinks: songLinksObject = {
     "MusicianByPorterRobinson": "",
     "NotDeadYetByLordHuron": "",
     "PeachesByJustinBieber": "",
     "SoundAndVisionByHeladoNegro": ""
-  }
+  };
 
   //INJECTING THIS CHATCOMPONENT WITH THE WEBSOCKET SERVICE
-  constructor(public webSocketService: WebSocketService) { }
-
+  constructor(public webSocketService: WebSocketService, public route: ActivatedRoute) { 
+    this.route.params.subscribe(params => this.chatRoomName = params.chatRoomName);
+  }
 
   //OPEN WEBSOCKET ON INIT LIFECYCLE HOOK
   ngOnInit(): void {
-    this.webSocketService.openWebsocket()
+    this.webSocketService.openWebsocket(this.chatRoomName)
   }
 
   //CLOSE WEBSOCKET ON DESTROY LIFECYCLE HOK
   ngOnDestroy(): void {
+    console.log("closing websocket");
     this.webSocketService.closeWebsocket()
   }
 
   //SENDING A MESSAGE METHOD
-  sendMessage(sendForm: NgForm) {
-    const chatMessageDto = new ChatMessageDto(sendForm.value.user, sendForm.value.message)
+  sendMessage(messageForm: NgForm) {
+    const chatMessageDto = new ChatMessageDto(this.userName === null ? "" : this.userName, messageForm.value.message, "chat")
     this.webSocketService.sendMessage(chatMessageDto);
     //CLEAR THE MESSAGE INPUT AFTER SENDING A MESSAGE, BUT NOT THE USER'S NAME
-    sendForm.controls.message.reset();
+    messageForm.controls.message.reset();
   }
 
-  handleClick(songName: string) {
-    Object.keys(this.songLinks).map((key: string) => {
-      if (key === songName) {
-        this.songLinks[key] = "active";
-      } else {
-        this.songLinks[key] = "";
-      }
-    })
+  //SENDING A MESSAGE METHOD
+  createUser(sendForm: NgForm) {
+    if (sendForm.value.userName === "") return;
+    this.userName = sendForm.value.userName
+    const chatMessageDto = new ChatMessageDto(this.userName === null ? "" : this.userName, "joined chat", "join")
+    this.webSocketService.sendMessage(chatMessageDto);
+    //REMOVE THE USERNAME PROMPT ONCE ANSWERED AND DISPLAY THE MESSAGE FIELD
+    this.userNameDisplay = "d-none";
+    this.messageDisplay = "";
   }
 }
