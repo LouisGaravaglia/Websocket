@@ -29,7 +29,7 @@
                 <ul class="list-group list-group-flush">
                     <!-- LOOPING OVER MESSAGES -->
                     <li class="list-group-item" *ngFor="let chatMessage of webSocketService.chatMessages">
-                        <strong class="p-1 bg-secondary text-white">{{chatMessage.user}}:</strong>
+                        <strong class="p-1 {{userName === chatMessage.user ? 'bg-dark' : 'bg-secondary'}} text-white">{{chatMessage.user}}:</strong>
                         <span> {{chatMessage.message}}</span>
                     </li>
                 </ul>
