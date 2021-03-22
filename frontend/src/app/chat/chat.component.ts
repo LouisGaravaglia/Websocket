@@ -43,8 +43,6 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   //SENDING A MESSAGE METHOD
   sendMessage(messageForm: NgForm) {
-    console.log("this is message: ", messageForm.value.message);
-    
     const chatMessageDto = new ChatMessageDto(this.userName === null ? "" : this.userName, messageForm.value.message, "chat")
     this.webSocketService.sendMessage(chatMessageDto);
     //CLEAR THE MESSAGE INPUT AFTER SENDING A MESSAGE, BUT NOT THE USER'S NAME
@@ -53,12 +51,10 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   //SENDING A MESSAGE METHOD
   createUser(sendForm: NgForm) {
-
+    if (sendForm.value.userName === "") return;
     this.userName = sendForm.value.userName
-    console.log("userName: ", this.userName);
     const chatMessageDto = new ChatMessageDto(this.userName === null ? "" : this.userName, "joined chat", "join")
     this.webSocketService.sendMessage(chatMessageDto);
-
     //REMOVE THE USERNAME PROMPT ONCE ANSWERED AND DISPLAY THE MESSAGE FIELD
     this.userNameDisplay = "d-none";
     this.messageDisplay = "";

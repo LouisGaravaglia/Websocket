@@ -10,15 +10,27 @@ interface navLinksObject {
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent {
-  navLinks: navLinksObject = {"homeIsActive": "", "discoverIsActive": ""}
+  navLinks: navLinksObject = {"homeIsActive": "", "discoverIsActive": "", "chatIsActive": ""}
+  chatRoomName: string = ""
   
   constructor() {
-    if (window.location.href === "http://localhost:4200/chat") {
-      this.navLinks["homeIsActive"] = "";
+    const url = window.location.href;
+    const params = url.split("/");
+    this.chatRoomName = params[params.length - 1];
+    console.log("url: ", url);
+
+    if (url === "http://localhost:4200/discover") {
       this.navLinks["discoverIsActive"] = "active";
-    } else {
+      this.navLinks["homeIsActive"] = "";
+      this.navLinks["chatIsActive"] = "";
+    } else if (url === "http://localhost:4200/") {
       this.navLinks["homeIsActive"] = "active";
       this.navLinks["discoverIsActive"] = "";
+      this.navLinks["chatIsActive"] = "";
+    } else {
+      this.navLinks["chatIsActive"] = "active";
+      this.navLinks["discoverIsActive"] = "";
+      this.navLinks["homeIsActive"] = "";
     }
    }
   
@@ -31,6 +43,4 @@ export class NavComponent {
       }
     })
   }
-
-
 }

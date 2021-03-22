@@ -4,13 +4,16 @@
         <main class="px-3 w-50 mx-auto my-auto">
         <h1>What would you like your username to be?</h1>
         <form (ngSubmit)="createUser(sendForm)" #sendForm="ngForm" action="">
-            <div class="chat-send row">
-         
-                <div class="col-8">
+            <div class="chat-send row mx-auto my-auto">
+                <div class="col-3">
+                </div>
+                <div class="col-4 mx-auto my-auto">
                     <input type="text" class="form-control" name="userName" id="input-userName" ngModel>
                 </div>
                 <div class="col-2">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-secondary">Submit</button>
+                </div>
+                <div class="col-3">
                 </div>
             </div>
         </form>
@@ -18,6 +21,9 @@
     </div>
     <!-- CHAT CONTAINER -->
     <div class="container {{messageDisplay}}">
+        <div class="mx-auto my-auto text-center mb-5">
+            <h1 >Welcome to the <span class="p-1 bg-secondary text-white">{{chatRoomName}}</span> chat</h1>
+        </div>
         <div class="chat-content">
             <div class="card">
                 <ul class="list-group list-group-flush">
@@ -32,16 +38,12 @@
         <!-- FORM BELOW DISPLAYING THE MESSAGES WHERE THE USER CAN CHOOSE THEIR NAME AND TYPE THEIR MESSAGE -->
         <form (ngSubmit)="sendMessage(messageForm)" #messageForm="ngForm" action="">
             <div class="chat-send row">
-                <!-- <h6>User Name:</h6>
-                <div class="col-2">
-                    <input type="text" class="form-control" name="user" id="input-user" ngModel>
-                </div> -->
                 <h6>Message:</h6>
                 <div class="col-8">
                     <input type="text" class="form-control" name="message" id="input-message" ngModel>
                 </div>
                 <div class="col-2">
-                    <button type="submit" class="btn btn-primary">Send</button>
+                    <button type="submit" class="btn btn-secondary">Send</button>
                 </div>
             </div>
         </form>

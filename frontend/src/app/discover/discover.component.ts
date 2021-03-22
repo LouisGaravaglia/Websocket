@@ -1,8 +1,4 @@
-import { ChatMessageDto } from './../models/chatMessageDto';
-import { WebSocketService } from './../services/web-socket.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { Component } from '@angular/core';
 
 interface songLinksObject {
   [key: string]: string
@@ -20,9 +16,6 @@ export class DiscoverComponent {
     "PeachesByJustinBieber": "",
     "SoundAndVisionByHeladoNegro": ""
   };
-  chatRoomName: string = "";
-
-
 
   handleClick(songName: string) {
     Object.keys(this.songLinks).map((key: string) => {
@@ -32,6 +25,5 @@ export class DiscoverComponent {
         this.songLinks[key] = "";
       }
     })
-    this.chatRoomName = songName;
   }
 }
